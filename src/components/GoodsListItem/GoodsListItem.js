@@ -2,20 +2,22 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./GoodsListItem.module.scss";
 import { useDispatch } from "react-redux";
-import { addGoodsActionCreator } from "../../store/reducers/cart.reducer";
+import { addGoods } from "../../store/reducers/cart.reducer";
+import { useAuth } from "../../contexts/auth.context";
 
 function GoodsListItem({ products }) {
+  const { isLoggedIn } = useAuth();
   const dispatch = useDispatch();
 
   const handleClickAddGoods = (e) => {
     e.preventDefault(); // 페이지 이동 방지
 
     const id = products.goodsno;
-    const amount = 1;
-    const item = { id, amount };
-    const action = addGoodsActionCreator(item);
+    const count = 1;
+    const item = { id, count };
+    dispatch(addGoods(item));
 
-    dispatch(action);
+    alert("해당 상품이 장바구니에 추가 되었습니다.");
   };
 
   return (
@@ -31,9 +33,15 @@ function GoodsListItem({ products }) {
           <div className={styles.discount}>{products.sale_percent}%</div>
         </div>
         <div className={styles.cartWrapper}>
-          <button onClick={handleClickAddGoods}>
-            <img src="/cart1.png" alt="cart1" />
-          </button>
+          {isLoggedIn ? (
+            <button className={styles.cartBtn} onClick={handleClickAddGoods}>
+              <img src="/cart1.png" alt="cart1" />
+            </button>
+          ) : (
+            <Link to="/sign-in" className={styles.cartBtn}>
+              <img src="/cart1.png" alt="cart" />
+            </Link>
+          )}
         </div>
       </Link>
     </>

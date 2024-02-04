@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import api from "./../../api/api";
 import styles from "./ProductDetailPage.module.scss";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addGoodsActionCreator } from "./../../store/reducers/cart.reducer";
+import { addGoods } from "./../../store/reducers/cart.reducer";
+import { useAuth } from "../../contexts/auth.context";
 
 function ProductDetailPage() {
   const { goodsNo } = useParams();
+  const { isLoggedIn } = useAuth();
   const [products, setProducts] = useState(null);
-  const [amount, setAmount] = useState(1);
+  const [count, setCount] = useState(1); // 상품 수량 조절
   const dispatch = useDispatch();
 
   const today = new Date(); // 오늘 날짜
@@ -18,14 +20,13 @@ function ProductDetailPage() {
   const handleClickAddGoods = (e) => {
     e.preventDefault(); // 페이지 이동 방지
     const id = products.goodsno;
-    const item = { id, amount };
-    const action = addGoodsActionCreator(item);
-
-    dispatch(action);
+    const item = { id, count: count };
+    dispatch(addGoods(item));
+    alert("해당 상품이 장바구니에 추가 되었습니다.");
   };
 
-  const handleChangeAmount = (e) => {
-    setAmount(parseInt(e.target.value)); // 입력 값을 정수로 변환하여 업데이트
+  const handleChangeCount = (e) => {
+    setCount(parseInt(e.target.value)); // 입력 값을 정수로 변환하여 업데이트
   };
 
   useEffect(() => {
@@ -106,7 +107,7 @@ function ProductDetailPage() {
           </div>
 
           <div className={styles.optionWrapper}>
-            <form action="/">
+            <form action="">
               <div>옵션 선택</div>
               <button className={styles.btn1}>size chart</button>
               <select name="options" id="options">
@@ -122,12 +123,21 @@ function ProductDetailPage() {
                 <span>수량 : </span>
                 <input
                   type="number"
-                  value={amount}
-                  onChange={handleChangeAmount}
+                  value={count}
+                  onChange={handleChangeCount}
                 />
-                <button onClick={handleClickAddGoods}>
-                  <img src="/cart1.png" alt="cart1" />
-                </button>
+                {isLoggedIn ? (
+                  <button
+                    className={styles.cartBtn}
+                    onClick={handleClickAddGoods}
+                  >
+                    <img src="/cart1.png" alt="cart1" />
+                  </button>
+                ) : (
+                  <Link to="/sign-in" className={styles.cartBtn}>
+                    <img src="/cart1.png" alt="cart" />
+                  </Link>
+                )}
               </div>
             </form>
           </div>

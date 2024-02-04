@@ -1,34 +1,38 @@
-export const ADD_GOODS = "cart/addGoods";
-export const REMOVE_GOODS = "cart/removeGoods";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const addGoodsActionCreator = (payload) => ({
-  type: ADD_GOODS,
-  payload,
+const cartSlice = createSlice({
+  initialState: {
+    goods: [],
+  },
+  name: "cart",
+  reducers: {
+    addGoods: (state, action) => {
+      let num = state.goods.findIndex((item) => {
+        return item.id === action.payload.id;
+      });
+
+      if (num === -1) {
+        state.goods.push(action.payload);
+      } else {
+        state.goods[num].count += action.payload.count;
+      }
+    },
+    removeGoods: (state, action) => {
+      const item = state.goods.findIndex(
+        (product) => product.id === action.payload
+      );
+      state.goods.splice(item, 1);
+    },
+    updateCount: (state, action) => {
+      const counter = state.goods.findIndex(
+        (product) => product.id === action.payload
+      );
+      if (counter !== -1) {
+        state.goods[counter].count += 1;
+      }
+    },
+  },
 });
-export const removeGoodsActionCreator = (payload) => ({
-  type: REMOVE_GOODS,
-  payload,
-});
 
-const initialState = {
-  goods: [],
-  totalPrice: 0,
-};
-
-export default function cartReducer(state = initialState, action) {
-  const newState = { ...state };
-
-  if (action.type === ADD_GOODS) {
-    const newItem = action.payload;
-    const newGoods = [...state.goods, newItem];
-
-    newState.goods = newGoods;
-  } else if (action.type === REMOVE_GOODS) {
-    const goodsIdToRemove = action.payload;
-    const newGoods = state.goods.filter((item) => item.id !== goodsIdToRemove);
-
-    newState.goods = newGoods;
-  }
-
-  return newState;
-}
+export const { addGoods, removeGoods, updateCount } = cartSlice.actions;
+export const cartReducer = cartSlice.reducer;

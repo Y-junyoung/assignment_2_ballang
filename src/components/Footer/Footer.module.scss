@@ -1,0 +1,46 @@
+.footer {
+  background-color: black;
+  height: 13rem;
+  color: white;
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin: auto;
+  }
+  .left,
+  .right {
+    margin-top: 30px;
+  }
+
+  .left {
+    display: grid;
+    row-gap: 30px;
+    font-size: 0.8rem;
+
+    > a {
+      text-decoration: none;
+      color: white;
+    }
+
+    p {
+      margin: 0;
+      color: rgb(88, 88, 88);
+    }
+  }
+
+  .right {
+    display: grid;
+    row-gap: 35px;
+
+    .imgWrapper {
+      display: flex;
+      column-gap: 30px;
+
+      img {
+        border-radius: 5px;
+      }
+    }
+  }
+}

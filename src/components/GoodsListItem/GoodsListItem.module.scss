@@ -1,0 +1,74 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  row-gap: 0.5rem;
+  color: black;
+  width: 200px;
+
+  img {
+    height: 280px;
+    width: 100%;
+
+    &:hover {
+      border: 2px solid rgb(151, 151, 151);
+      border-radius: 4px;
+    }
+  }
+
+  h6 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    text-align: left;
+  }
+
+  .name {
+    color: #000;
+    font-size: 13px;
+    width: 100%;
+    vertical-align: baseline;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: -0.5px;
+    word-break: keep-all;
+    white-space: nowrap; // 텍스트 한줄로 보이도록
+    overflow: hidden; // 넘어가면 안보이게
+    text-overflow: ellipsis; // 텍스트 ...으로 표시
+    height: 25px;
+  }
+
+  .priceWrapper {
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+
+    .price {
+      display: inline-block;
+    }
+
+    .discount {
+      display: inline-block;
+      margin-left: 10px;
+      color: #bd081c;
+    }
+  }
+  .cartWrapper {
+    display: flex;
+    justify-content: right;
+
+    button {
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+      background-color: white;
+      border: none;
+      cursor: pointer;
+
+      img {
+        height: 40px;
+        width: 40px;
+      }
+    }
+  }
+}

@@ -12,7 +12,7 @@ function GoodsListItem({ products }) {
   const handleClickAddGoods = (e) => {
     e.preventDefault(); // 페이지 이동 방지
 
-    const id = products.goodsno;
+    const id = products.id;
     const count = 1;
     const item = { id, count };
     dispatch(addGoods(item));

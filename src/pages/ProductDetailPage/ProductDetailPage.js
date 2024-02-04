@@ -19,7 +19,7 @@ function ProductDetailPage() {
 
   const handleClickAddGoods = (e) => {
     e.preventDefault(); // 페이지 이동 방지
-    const id = products.goodsno;
+    const id = products.id;
     const item = { id, count: count };
     dispatch(addGoods(item));
     alert("해당 상품이 장바구니에 추가 되었습니다.");

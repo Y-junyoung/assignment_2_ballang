@@ -1,3 +1,5 @@
+// CartPage.js
+
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeGoods, updateCount } from "../../store/reducers/cart.reducer";
@@ -28,6 +30,7 @@ function CartPage() {
   }, [cartGoods]);
 
   const handleRemoveGoods = (goodsId) => {
+    console.log("아무거나");
     dispatch(removeGoods(goodsId));
   };
 
